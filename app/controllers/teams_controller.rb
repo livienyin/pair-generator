@@ -80,4 +80,11 @@ class TeamsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def people
+    @people = People.all
+    @team_memberships = @team.team_memberships
+  end
+  
+  
 end

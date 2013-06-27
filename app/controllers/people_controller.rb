@@ -1,3 +1,5 @@
+require 'pry'
+
 class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
@@ -25,6 +27,7 @@ class PeopleController < ApplicationController
   # GET /people/new.json
   def new
     @person = Person.new
+    @teams = Team.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +44,9 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(params[:person])
+    Team.all.each do |team|
+      @person.teams << team if params[team.id.to_s]
+    end
 
     respond_to do |format|
       if @person.save

@@ -4,7 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
-    <th></th>
+    <th>Team(s)</th>
     <th></th>
     <th></th>
   </tr>
@@ -13,6 +13,11 @@
   <tr>
     <td><%= person.name %></td>
     <td><%= person.email %></td>
+    <td>
+      <% person.teams.each do |team| %>
+      <%= team.name %>
+      <% end %>
+    </td>
     <td><%= link_to 'Show', person %></td>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
     <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>

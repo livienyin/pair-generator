@@ -20,6 +20,11 @@
     <%= f.text_field :email %>
   </div>
   
+  <% @teams.each do |team| %>
+  <%= check_box_tag(team.id) %>
+  <%= label_tag(team.name) %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
