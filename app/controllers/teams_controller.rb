@@ -1,3 +1,5 @@
+require 'pry'
+
 class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
@@ -41,7 +43,6 @@ class TeamsController < ApplicationController
   # POST /teams.json
   def create
     @team = Team.new(params[:team])
-
     respond_to do |format|
       if @team.save
         format.html { redirect_to @team, notice: 'Team was successfully created.' }
@@ -57,7 +58,11 @@ class TeamsController < ApplicationController
   # PUT /teams/1.json
   def update
     @team = Team.find(params[:id])
-
+    TeamMembership.where(:id => params.select {|param, value|
+                           param.to_i if param.to_i != 0}.map {|k, v| k.to_i}).destroy_all
+    
+    
+    
     respond_to do |format|
       if @team.update_attributes(params[:team])
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }

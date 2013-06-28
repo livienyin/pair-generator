@@ -15,6 +15,13 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+
+  <%= f.label ("Remove team member(s):") %><br />
+  <% @team.team_memberships.each do |team_membership| %>
+  <%= check_box_tag(team_membership.id) %>
+  <%= label_tag team_membership.person.name %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

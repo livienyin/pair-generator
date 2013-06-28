@@ -12,8 +12,8 @@
   <tr>
     <td><%= team.name %></td>
     <td>
-      <% team.people.each do |team| %>
-      <%= team.name %>
+      <% team.people.each do |person| %>
+      <%= person.name %>
       <% end %>
     </td>
     <td><%= link_to 'Show', team %></td>
