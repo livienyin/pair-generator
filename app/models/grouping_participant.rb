@@ -1,5 +1,5 @@
 class GroupingParticipant < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :grouping_id, :person_id 
   belongs_to :grouping
-  has_one :person
+  belongs_to :person
 end
