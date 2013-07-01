@@ -38,6 +38,7 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
+    @teams = Team.all
   end
 
   # POST /people
@@ -63,6 +64,13 @@ class PeopleController < ApplicationController
   # PUT /people/1.json
   def update
     @person = Person.find(params[:id])
+    Team.all.each do |team|
+      if params[team.id.to_s] && (!@person.teams.include? team)
+        @person.teams << team
+      elsif !params[team.id.to_s] && (@person.teams.include? team)
+        @person.team_memberships.where(:team_id => team.id).destroy_all
+      end
+    end
 
     respond_to do |format|
       if @person.update_attributes(params[:person])

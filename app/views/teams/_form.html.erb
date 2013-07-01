@@ -16,11 +16,27 @@
     <%= f.text_field :name %>
   </div>
 
-  <%= f.label ("Remove team member(s):") %><br />
-  <% @team.team_memberships.each do |team_membership| %>
-  <%= check_box_tag(team_membership.id) %>
-  <%= label_tag team_membership.person.name %>
-  <% end %>
+  <div class="field"> 
+    <% unless @people.nil? %>
+    <%= f.label ("Remove team member(s):") %><br />
+    <% @team.people.each do |person| %>
+    <%= check_box_tag(person.id) %>
+    <%= label_tag person.name %>
+    <% end %>
+    <% end %>
+  </div>
+
+  <div class="field"> 
+    <% unless @people.nil? %>
+    <%= f.label ("Add new team member(s):") %><br />
+    <% @people.each do |person| %>
+    <% unless person.teams.include? @team %>
+    <%= check_box_tag(person.id) %>
+    <%= label_tag(person.name) %>
+    <% end %>
+    <% end %>
+    <% end %>
+  </div>
 
   <div class="actions">
     <%= f.submit %>

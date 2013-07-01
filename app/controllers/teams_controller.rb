@@ -27,7 +27,8 @@ class TeamsController < ApplicationController
   # GET /teams/new.json
   def new
     @team = Team.new
-
+    @people = Person.all
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @team }
@@ -37,12 +38,17 @@ class TeamsController < ApplicationController
   # GET /teams/1/edit
   def edit
     @team = Team.find(params[:id])
+    @people = Person.all
   end
 
   # POST /teams
   # POST /teams.json
   def create
     @team = Team.new(params[:team])
+    Person.all.each do |person|
+      @team.people << person if params[person.id.to_s]
+    end
+
     respond_to do |format|
       if @team.save
         format.html { redirect_to @team, notice: 'Team was successfully created.' }
@@ -58,10 +64,15 @@ class TeamsController < ApplicationController
   # PUT /teams/1.json
   def update
     @team = Team.find(params[:id])
-    TeamMembership.where(:id => params.select {|param, value|
-                           param.to_i if param.to_i != 0}.map {|k, v| k.to_i}).destroy_all
-    
-    
+    selected_people = Person.where(:id => params.select {|param, value|
+                                     param.to_i if param.to_i != 0}.map {|k, v| k.to_i})
+    selected_people.each do |person|
+      if @team.people.include? person
+        person.team_memberships.where(:team_id => @team.id).destroy_all
+      else
+        @team.people << person
+      end
+    end
     
     respond_to do |format|
       if @team.update_attributes(params[:team])
@@ -84,12 +95,6 @@ class TeamsController < ApplicationController
       format.html { redirect_to teams_url }
       format.json { head :no_content }
     end
-  end
-
-  def people
-    @people = People.all
-    @team_memberships = @team.team_memberships
-  end
-  
+  end  
   
 end
