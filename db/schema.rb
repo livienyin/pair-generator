@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628060848) do
+ActiveRecord::Schema.define(:version => 20130701055655) do
 
   create_table "grouping_participants", :force => true do |t|
     t.datetime "created_at",  :null => false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130628060848) do
   end
 
   create_table "groupings", :force => true do |t|
-    t.date     "date"
+    t.datetime "date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

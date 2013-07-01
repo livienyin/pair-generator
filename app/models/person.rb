@@ -23,7 +23,7 @@ class Person < ActiveRecord::Base
   def get_person_with_most_distant_grouping_date(people)
     people.min_by do |person|
       most_recent_grouping_date = get_most_recent_grouping_date(person)
-      most_recent_grouping_date = Grouping.minimum(:date) - 1 if most_recent_grouping_date.nil?
+      most_recent_grouping_date = Grouping.minimum_date if most_recent_grouping_date.nil?
       most_recent_grouping_date
     end
   end
@@ -34,5 +34,9 @@ class Person < ActiveRecord::Base
 
   def groupings_with(person)
     groupings.joins(:people).where(:people => {:id => person.id})
+  end
+
+  def get_current_grouping
+    groupings.order(:date).last
   end
 end

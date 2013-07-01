@@ -1,8 +1,13 @@
 module PeopleHelper
 
   def self.generate_groupings
-    ungrouped_people = Person.all.sort do |person|
-      person.get_most_recent_grouping_date(person.get_teammate_with_most_distant_grouping_date)
+    ungrouped_people = Person.all.sort_by do |person|
+      selected_teammate = person.get_teammate_with_most_distant_grouping_date
+      if selected_teammate.nil?
+        Grouping.minimum_date
+      else
+        person.get_most_recent_grouping_date(selected_teammate) || DateTime.now
+      end
     end
     groupings = []
     stragglers = []
@@ -19,7 +24,7 @@ module PeopleHelper
     end
     stragglers.each do |straggler|
       person_for_straggler = straggler.get_teammate_with_most_distant_grouping_date
-      groupings.find {|grouping| grouping.include? person_for_straggler} << straggler
+      groupings.find {|grouping| grouping.include? person_for_straggler} << straggler unless person_for_straggler.nil?
     end
     groupings
   end
@@ -33,6 +38,6 @@ module PeopleHelper
   end
 
   def self.generate_and_persist_groupings_now
-    generate_and_persist_groupings_at(Date.today)
+    generate_and_persist_groupings_at(DateTime.now)
   end
 end

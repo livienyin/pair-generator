@@ -3,7 +3,8 @@ class Grouping < ActiveRecord::Base
   has_many :grouping_participants
   has_many :people, :through => :grouping_participants
 
-  # def self.groupings_including(participants)
-  #   join(:grouping_participants)
-  # end
+  def self.minimum_date
+    ((self.minimum(:date) || DateTime.now) - 1.day)
+  end
+
 end

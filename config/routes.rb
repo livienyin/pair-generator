@@ -3,5 +3,5 @@ OnePlusOne::Application.routes.draw do
 
 
   resources :teams
-
+  root to: 'groupings#index'
 end
