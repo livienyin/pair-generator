@@ -44,7 +44,7 @@ What design decisions were made:
 
 In addition to the Person, Team, and TeamMembership tables, I created Grouping and 
 GroupingParticipant tables to keep track of the date of each grouping. When generating groups, 
-I start with a set of ungrouped people and a set of stragglers. For each person, the 
+I start with a set of ungrouped people and an empty set of stragglers. For each person, the 
 algorithm selects the teammate that s/he was grouped with the longest time ago. Then, the two 
 people are grouped and removed from the set of ungrouped people. This ensures that people have 
 grouped with all other teammates before repeating a person. If by the end, there are any 
