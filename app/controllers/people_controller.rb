@@ -1,5 +1,3 @@
-require 'pry'
-
 class PeopleController < ApplicationController
   # GET /people
   # GET /people.json

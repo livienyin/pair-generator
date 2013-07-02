@@ -1,0 +1,15 @@
+<h1>Welcome to 1+1</h1>
+<%= link_to 'People Page', :controller => :people, :action => 'index'
+%>
+<%= link_to 'Teams Page', :controller => :teams, :action => 'index' %>
+<h2>Groups by most recent date:</h2>
+
+<div>
+  <% unless @groupings.nil? %>
+  <% @groupings.each do |grouping| %>
+  <%= grouping.people.map {|person| person.name}.join(", ") %>
+  <b><%= grouping.date.strftime("%A %b %e, %l:%M %p") %></b>
+  <br />
+  <% end %>
+  <% end %>
+</div>

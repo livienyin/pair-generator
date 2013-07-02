@@ -1,5 +1,3 @@
-require 'pry'
-
 class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json

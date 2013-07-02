@@ -1,0 +1,16 @@
+Instructions on how to run app:
+
+git clone https://livienyin@bitbucket.org/livienyin/oneplusone.git
+cd oneplusone
+bundle install
+
+Scheduler.rake contains a "mailing" task that can be called with cron or the Heroku Scheduler.
+The "mailing" task calls the "generate_groups" task to create groupings. It then emails each person with their partners for the week. 
+
+
+
+What design decisions were made:
+
+
+How I tested the app:
+I began with rspec unit testing. However, in writing the code to generate pairs, I primarily tested the code creating sample data in rails console. 
