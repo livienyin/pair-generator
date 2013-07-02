@@ -5,6 +5,14 @@
   <%= @team.name %>
 </p>
 
+<p>
+  <b>Teammembers:</b>
+  <% unless @team.people.nil? %>
+  <% @team.people.each do |person| %>
+  <span><%= person.name %></span>
+  <% end %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>

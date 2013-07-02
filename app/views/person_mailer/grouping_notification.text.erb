@@ -1,3 +1,4 @@
 Hello <%= @person.name %>,
 
 This week, you'll be paired with: 
+<%= @person.get_current_grouping.people.select {|person| person.id != @person.id}.map {|person| "#{person.name} (#{person.email})"}.join(", ") %>

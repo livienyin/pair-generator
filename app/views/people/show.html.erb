@@ -10,6 +10,14 @@
   <%= @person.email %>
 </p>
 
+<p>
+  <b>Teams:</b>
+  <% unless @teams.nil? %>
+  <% @teams.each do |team| %>
+  <span><%= team.name if @person.teams.include? team %></span>
+  <% end %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
