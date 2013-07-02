@@ -8,10 +8,11 @@ bundle exec rake db:schema:load
 rails server
 
 Scheduler.rake contains a "mailing" task that can be called with cron (or the Heroku Scheduler).
-The "mailing" task calls the "generate_groups" task to create groupings. It then emails each person with their partners for the week.
+The "mailing" task calls the "generate_groups" task to create groupings. It then emails each 
+person with their partners for the week.
 
 The "mailing" task will only function if you have set the environment variables GMAIL_USERNAME
-and GMAIL_PASSWORD. It's recommended that you use the crontab.sh file to run the job. This file
+and GMAIL_PASSWORD. It is recommended that you use the crontab.sh file to run the job. This file
 will source a file env.sh (not included in this repository) that should include exports of these
 two environment variables. It is also important to make sure that the ruby environment is properly
 configured in this file. Here is an example of what an env.sh file might look like.
@@ -41,8 +42,19 @@ ONE_PLUS_ONE_ROOT="~/oneplusone"
 
 What design decisions were made:
 
-In addition to the Person, Team, and TeamMembership tables, I created Grouping and GroupingParticipant tables to keep track of the date of each grouping. When generating groups, I start with a set of ungrouped people and a set of stragglers. For each person, the algorithm selects the teammate that s/he was grouped with the longest time ago. Then, the two people are grouped and removed from the set of ungrouped people. This ensures that people have grouped with all other teammates before repeating a person. If by the end, there are any stragglers that don't get grouped because they're on an odd-numbered team, the algorithm finds the teammate s/he was grouped with the longest time ago, and adds the straggler to that teammates grouping.
+In addition to the Person, Team, and TeamMembership tables, I created Grouping and 
+GroupingParticipant tables to keep track of the date of each grouping. When generating groups, 
+I start with a set of ungrouped people and a set of stragglers. For each person, the 
+algorithm selects the teammate that s/he was grouped with the longest time ago. Then, the two 
+people are grouped and removed from the set of ungrouped people. This ensures that people have 
+grouped with all other teammates before repeating a person. If by the end, there are any 
+stragglers that do not get grouped because they're on an odd-numbered team, the algorithm finds 
+the teammate s/he was grouped with the longest time ago, and adds the straggler to that teammates 
+grouping.
 
 How I tested the app:
 
-I began with rspec unit testing but found that automated testing was very difficult with the somewhat chaotic behavior of the pairing algorithm. I tested the algorithm by manually generating the groupings in rails console and verifying that the groupings seemed appropriate to the project parameters.
+I began with rspec unit testing but found that automated testing was very difficult with the 
+somewhat chaotic behavior of the pairing algorithm. I tested the algorithm by manually generating 
+the groupings in rails console and verifying that the groupings seemed appropriate to the project 
+parameters.
